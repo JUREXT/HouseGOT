@@ -4,6 +4,7 @@ class Constants {
 
     companion object {
 
+        const val DATABASE = "houses_db"
         const val BASE_URL = "https://www.anapioficeandfire.com/api/"
     }
 }
