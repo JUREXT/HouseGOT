@@ -15,7 +15,7 @@ interface HousesDao {
     suspend fun insertHouses(houses: List<Houses>)
 
     @Query("SELECT * FROM houses ORDER BY page")
-    fun getHouses(): Flow<PagingSource<Int, Houses>>
+    fun getHouses(): PagingSource<Int, Houses>
 
     @Query("DELETE FROM houses")
     suspend fun deleteAllHouses()
