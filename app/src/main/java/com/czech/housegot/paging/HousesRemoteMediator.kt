@@ -11,6 +11,7 @@ import com.czech.housegot.database.RemoteKeysDao
 import com.czech.housegot.models.Houses
 import com.czech.housegot.models.RemoteKeys
 import com.czech.housegot.network.ApiService
+import com.czech.housegot.utils.Constants.Companion.PAGE_SIZE
 import kotlinx.coroutines.flow.*
 import retrofit2.HttpException
 import java.io.IOException
@@ -109,9 +110,5 @@ class HousesRemoteMediator @Inject constructor(
         } catch (error: HttpException) {
             MediatorResult.Error(error)
         }
-    }
-
-    companion object {
-        const val PAGE_SIZE = 20
     }
 }
