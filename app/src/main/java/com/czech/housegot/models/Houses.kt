@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "houses")
 data class Houses(
     @PrimaryKey(autoGenerate = true)
-    val id: Int?,
+    val id: Int,
     val url: String?,
     val name: String?,
     val region: String?,

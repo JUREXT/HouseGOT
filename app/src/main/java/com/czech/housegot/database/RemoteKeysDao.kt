@@ -14,8 +14,11 @@ interface RemoteKeysDao {
     suspend fun insertAll(remoteKey: List<RemoteKeys>)
 
     @Query("Select * From remote_keys Where id = :id")
-    fun getRemoteKeyById(id: Int): Flow<RemoteKeys?>
+    fun getRemoteKeyById(id: Int): RemoteKeys?
 
     @Query("Delete From remote_keys")
     suspend fun deleteRemoteKeys()
+
+    @Query("Select created_at From remote_keys Order By created_at DESC LIMIT 1")
+    suspend fun getCreationTime(): Long?
 }

@@ -11,5 +11,7 @@ data class RemoteKeys(
     val id: Int,
     val prevKey: Int?,
     val currentPage: Int,
-    val nextKey: Int?
+    val nextKey: Int?,
+    @ColumnInfo(name = "created_at")
+    val createdAt: Long = System.currentTimeMillis()
 )
