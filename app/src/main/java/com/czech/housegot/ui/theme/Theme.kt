@@ -12,15 +12,13 @@ import androidx.compose.ui.platform.LocalView
 
 private val DarkColorScheme = darkColorScheme(
     primary = black,
-    onPrimary = Purple700,
-    secondary = Teal200,
+    secondary = white,
     scrim = black
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = white,
-    onPrimary = Purple700,
-    secondary = Teal200,
+    secondary = black,
     scrim = black
 
     /* Other default colors to override

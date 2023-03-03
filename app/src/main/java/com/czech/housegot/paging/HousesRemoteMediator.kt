@@ -13,6 +13,7 @@ import com.czech.housegot.network.ApiService
 import com.czech.housegot.utils.Constants.Companion.PAGE_SIZE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -76,6 +77,8 @@ class HousesRemoteMediator @Inject constructor(
         return withContext(ioDispatcher) {
             try {
                 val houses = page.let { apiService.getHouses(page = it, pageSize = PAGE_SIZE) }
+
+                delay(500)
 
                 val endOfPaginationReached = houses.isEmpty()
 
