@@ -2,22 +2,22 @@ package com.czech.housegot.ui.screens
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.paging.LoadState
 import androidx.paging.LoadStates
-import com.czech.housegot.ui.components.HousesGrid
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.czech.housegot.models.Houses
+import com.czech.housegot.ui.components.HousesList
 import com.czech.housegot.ui.theme.black
 import com.czech.housegot.ui.theme.white
 
@@ -26,7 +26,6 @@ import com.czech.housegot.ui.theme.white
 fun HousesScreen(
     viewModel: HousesViewModel
 ) {
-
     Scaffold(
         topBar = {
             Text(
@@ -38,25 +37,31 @@ fun HousesScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 14.dp, start = 16.dp)
-                    .fillMaxSize()
             )
         }
     ) { paddingValues ->
 
-        HousesGrid(
-            list = listOf(),
+        val houses = viewModel.getPagedHouses().collectAsLazyPagingItems()
+
+        HousesList(
+            list = houses,
             observeLoadStates = {
-                ObserveLoadStates(loadState = null)
+                ObserveLoadStates(
+                    loadState = houses.loadState.mediator,
+                    houses = houses
+                )
             },
             modifier = Modifier
                 .padding(paddingValues)
+                .fillMaxSize()
         )
     }
 }
 
 @Composable
 fun ObserveLoadStates(
-    loadState: LoadStates?
+    loadState: LoadStates?,
+    houses: LazyPagingItems<Houses>
 ) {
 
 }

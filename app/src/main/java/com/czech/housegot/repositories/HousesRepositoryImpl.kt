@@ -11,6 +11,7 @@ import com.czech.housegot.models.Houses
 import com.czech.housegot.network.ApiService
 import com.czech.housegot.paging.HousesRemoteMediator
 import com.czech.housegot.utils.Constants
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,29 +21,28 @@ import javax.inject.Inject
 class HousesRepositoryImpl @Inject constructor(
     private val housesDao: HousesDao,
     private val remoteKeysDao: RemoteKeysDao,
-    private val housesDatabase: HousesDatabase,
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val ioDispatcher: CoroutineDispatcher
 ): HousesRepository {
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getPagedHouses(): Flow<PagingData<Houses>> {
-        return flow<PagingData<Houses>> {
-            Pager(
-                config = PagingConfig(
-                    pageSize = Constants.PAGE_SIZE,
-                    prefetchDistance = Constants.PAGE_SIZE / 2,
-                    initialLoadSize = Constants.PAGE_SIZE
-                ),
-                pagingSourceFactory = {
-                    housesDao.getHouses()
-                },
-                remoteMediator = HousesRemoteMediator(
-                    housesDao = housesDao,
-                    remoteKeysDao = remoteKeysDao,
-                    housesDatabase = housesDatabase,
-                    apiService = apiService
-                )
-            ).flow
-        }.flowOn(Dispatchers.IO)
+        return Pager(
+            initialKey = 1,
+            config = PagingConfig(
+                pageSize = Constants.PAGE_SIZE,
+                prefetchDistance = Constants.PAGE_SIZE / 4,
+                initialLoadSize = Constants.PAGE_SIZE
+            ),
+            pagingSourceFactory = {
+                housesDao.getHouses()
+            },
+            remoteMediator = HousesRemoteMediator(
+                housesDao = housesDao,
+                remoteKeysDao = remoteKeysDao,
+                apiService = apiService,
+                ioDispatcher = ioDispatcher
+            )
+        ).flow
     }
 }

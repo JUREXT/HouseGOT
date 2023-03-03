@@ -10,6 +10,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @[Module InstallIn(SingletonComponent::class)]
@@ -18,14 +19,14 @@ class RepositoryModule {
     @[Provides Singleton]
     fun provideHousesRepository(
         apiService: ApiService,
-        housesDatabase: HousesDatabase,
         housesDao: HousesDao,
-        remoteKeysDao: RemoteKeysDao
+        remoteKeysDao: RemoteKeysDao,
+        ioDispatcher: CoroutineDispatcher
     ): HousesRepository =
         HousesRepositoryImpl(
             apiService = apiService,
-            housesDatabase = housesDatabase,
             housesDao = housesDao,
-            remoteKeysDao = remoteKeysDao
+            remoteKeysDao = remoteKeysDao,
+            ioDispatcher = ioDispatcher
         )
 }

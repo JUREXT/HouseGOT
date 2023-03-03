@@ -14,7 +14,7 @@ interface HousesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHouses(houses: List<Houses>)
 
-    @Query("SELECT * FROM houses ORDER BY page")
+    @Query("Select * From houses Order By page")
     fun getHouses(): PagingSource<Int, Houses>
 
     @Query("DELETE FROM houses")
