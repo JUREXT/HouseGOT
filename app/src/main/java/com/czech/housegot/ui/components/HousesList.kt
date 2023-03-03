@@ -3,6 +3,7 @@ package com.czech.housegot.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -34,7 +35,11 @@ fun HousesList(
 
 //    val data = listOf("House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor")
 
-    LazyColumn {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(start = 4.dp, end = 4.dp, top = 4.dp)
+    ) {
         itemsIndexed(
             items = list,
         ) { index, house ->
@@ -73,6 +78,7 @@ fun HousesListItem(
         modifier = modifier
             .padding(4.dp)
             .height(150.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = colors
         )
@@ -120,7 +126,7 @@ fun HousesListItem(
                     text = house,
                     color = black,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.W600,
+                    fontWeight = FontWeight.W500,
                     fontFamily = FontFamily.SansSerif,
                     textAlign = TextAlign.Center,
                     modifier = Modifier

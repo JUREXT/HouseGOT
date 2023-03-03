@@ -1,5 +1,6 @@
 package com.czech.housegot.ui.screens
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -21,6 +22,7 @@ import com.czech.housegot.models.Houses
 import com.czech.housegot.ui.components.HousesList
 
 @OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HousesScreen(
     viewModel: HousesViewModel
@@ -42,7 +44,7 @@ fun HousesScreen(
                     .padding(top = 14.dp, start = 16.dp)
             )
         }
-    ) { paddingValues ->
+    ) {
 
         val houses = viewModel.getPagedHouses().collectAsLazyPagingItems()
 
@@ -56,9 +58,9 @@ fun HousesScreen(
                 )
             },
             modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
         )
+
+
     }
 }
 
