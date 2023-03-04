@@ -4,9 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,6 +56,7 @@ fun HousesList(
             }
             HousesListItem(
                 house = house?.name.toString(),
+                date = house?.founded.toString(),
                 colors = color,
                 modifier = Modifier
             )
@@ -72,6 +71,7 @@ fun HousesList(
 fun HousesListItem(
     modifier: Modifier,
     house: String,
+    date: String,
     colors: Color
 ) {
     Card(
@@ -87,12 +87,17 @@ fun HousesListItem(
         val constrains = ConstraintSet {
             val arrow = createRefFor("arrow")
             val houseRow = createRefFor("houseRow")
+            val dateText = createRefFor("date")
 
             constrain(arrow) {
                 top.linkTo(parent.top, margin = 11.dp)
                 end.linkTo(parent.end, margin = 11.dp)
             }
             constrain(houseRow) {
+                bottom.linkTo(dateText.top)
+                start.linkTo(dateText.start)
+            }
+            constrain(dateText) {
                 bottom.linkTo(parent.bottom, margin = 10.dp)
                 start.linkTo(parent.start, margin = 11.dp)
             }
@@ -133,6 +138,19 @@ fun HousesListItem(
                         .padding(bottom = 1.dp)
                 )
             }
+            if (date.isNotEmpty()) {
+                Text(
+                    text = "Since $date",
+                    color = black,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W500,
+                    fontFamily = FontFamily.SansSerif,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .layoutId("date")
+                )
+            }
+
         }
     }
 }

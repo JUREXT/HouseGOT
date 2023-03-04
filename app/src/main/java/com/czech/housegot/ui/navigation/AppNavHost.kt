@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
+import com.czech.housegot.ui.screens.DetailsScreen
 import com.czech.housegot.ui.screens.HousesScreen
 import com.czech.housegot.ui.screens.HousesViewModel
 
@@ -28,6 +30,19 @@ fun AppNavHost(
         composable(route = Screens.HousesScreen.route) {
             val viewModel = hiltViewModel<HousesViewModel>()
             HousesScreen(
+                viewModel = viewModel
+            )
+        }
+        composable(route = Screens.DetailsScreen.route) { backStackEntry ->
+
+            val housesEntry = remember(backStackEntry) {
+                navController.getBackStackEntry(Screens.HousesScreen.route)
+            }
+
+            val viewModel = hiltViewModel<HousesViewModel>(housesEntry)
+
+            DetailsScreen(
+                onBackPressed = { onBackPressed() },
                 viewModel = viewModel
             )
         }
