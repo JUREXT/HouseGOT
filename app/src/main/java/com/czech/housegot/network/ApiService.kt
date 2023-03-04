@@ -1,6 +1,5 @@
 package com.czech.housegot.network
 
-import com.czech.housegot.models.HouseDetail
 import com.czech.housegot.models.Houses
 import retrofit2.Response
 import retrofit2.http.GET
@@ -18,5 +17,5 @@ interface ApiService {
     @GET("houses/{id}")
     suspend fun getHouseDetail(
         @Path("id") houseId:Int,
-    ): Response<HouseDetail>
+    ): Response<Houses>
 }
