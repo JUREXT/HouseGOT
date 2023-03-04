@@ -1,6 +1,7 @@
 package com.czech.housegot.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,11 +24,13 @@ import androidx.paging.compose.itemsIndexed
 import com.czech.housegot.R
 import com.czech.housegot.models.Houses
 import com.czech.housegot.ui.theme.*
+import com.czech.housegot.utils.extractInt
 
 @Composable
 fun HousesList(
     list: LazyPagingItems<Houses>,
     observeLoadStates: @Composable () -> Unit,
+    onHouseClicked: (Int) -> Unit,
     modifier: Modifier,
 ) {
 
@@ -58,6 +61,9 @@ fun HousesList(
                 house = house?.name.toString(),
                 date = house?.founded.toString(),
                 colors = color,
+                onClick = {
+                    onHouseClicked(extractInt(house?.url.toString()))
+                          },
                 modifier = Modifier
             )
         }
@@ -72,12 +78,19 @@ fun HousesListItem(
     modifier: Modifier,
     house: String,
     date: String,
-    colors: Color
+    colors: Color,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier
             .padding(4.dp)
-            .height(150.dp),
+            .height(150.dp)
+            .clickable(
+                enabled = true,
+                onClick = {
+                    onClick()
+                }
+            ),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = colors

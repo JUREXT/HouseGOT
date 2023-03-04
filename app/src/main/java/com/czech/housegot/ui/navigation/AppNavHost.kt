@@ -8,6 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.czech.housegot.ui.screens.DetailsScreen
 import com.czech.housegot.ui.screens.HousesScreen
 import com.czech.housegot.ui.screens.HousesViewModel
@@ -27,16 +29,26 @@ fun AppNavHost(
             if (navController.previousBackStackEntry != null) navController.navigateUp()
         }
 
-        composable(route = Screens.HousesScreen.route) {
+        composable(
+            route = Screens.HousesScreen.route
+        ) {
             val viewModel = hiltViewModel<HousesViewModel>()
             HousesScreen(
-                viewModel = viewModel
+                viewModel = viewModel,
+                onHouseClicked = { house_id ->
+                    navController.navigate(Screens.DetailsScreen.route + "/$house_id")
+                }
             )
         }
-        composable(route = Screens.DetailsScreen.route) { backStackEntry ->
+        composable(
+            route = Screens.DetailsScreen.route + "/{house_id}",
+            arguments = listOf(navArgument("house_id") {
+                type = NavType.IntType
+            })
+        ) { backStackEntry ->
 
             val housesEntry = remember(backStackEntry) {
-                navController.getBackStackEntry(Screens.HousesScreen.route)
+                navController.getBackStackEntry(Screens.DetailsScreen.route + "/{house_id}")
             }
 
             val viewModel = hiltViewModel<HousesViewModel>(housesEntry)

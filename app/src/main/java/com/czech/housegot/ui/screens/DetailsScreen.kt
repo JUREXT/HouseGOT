@@ -1,9 +1,11 @@
 package com.czech.housegot.ui.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import com.czech.housegot.R
 import androidx.compose.ui.res.painterResource
 
@@ -14,7 +16,6 @@ fun DetailsScreen(
     onBackPressed: () -> Unit,
     viewModel: HousesViewModel
 ) {
-
     Scaffold(
         topBar = {
             IconButton(

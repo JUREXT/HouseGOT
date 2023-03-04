@@ -25,6 +25,7 @@ import com.czech.housegot.ui.components.HousesList
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HousesScreen(
+    onHouseClicked: (Int) -> Unit,
     viewModel: HousesViewModel
 ) {
 
@@ -56,6 +57,9 @@ fun HousesScreen(
                     houses = houses,
                     snackbarHostState = snackbarHostState
                 )
+            },
+            onHouseClicked = {
+                onHouseClicked(it)
             },
             modifier = Modifier
         )
