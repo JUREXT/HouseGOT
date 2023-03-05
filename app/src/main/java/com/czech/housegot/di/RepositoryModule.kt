@@ -4,10 +4,7 @@ import com.czech.housegot.database.HousesDao
 import com.czech.housegot.database.HousesDatabase
 import com.czech.housegot.database.RemoteKeysDao
 import com.czech.housegot.network.ApiService
-import com.czech.housegot.repositories.DetailsRepository
-import com.czech.housegot.repositories.DetailsRepositoryImpl
-import com.czech.housegot.repositories.HousesRepository
-import com.czech.housegot.repositories.HousesRepositoryImpl
+import com.czech.housegot.repositories.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +35,16 @@ class RepositoryModule {
         ioDispatcher: CoroutineDispatcher
     ): DetailsRepository =
         DetailsRepositoryImpl(
+            apiService = apiService,
+            ioDispatcher = ioDispatcher
+        )
+
+    @[Provides Singleton]
+    fun provideCharacterRepository(
+        apiService: ApiService,
+        ioDispatcher: CoroutineDispatcher
+    ): CharacterRepository =
+        CharacterRepositoryImpl(
             apiService = apiService,
             ioDispatcher = ioDispatcher
         )
