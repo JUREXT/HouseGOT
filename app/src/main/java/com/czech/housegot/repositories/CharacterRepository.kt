@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
 
-    fun getCharDetails(charId: Int): Flow<DataState<CharacterDetails>>
+    fun getCharDetails(charId: Int?): Flow<CharacterDetails?>
 }

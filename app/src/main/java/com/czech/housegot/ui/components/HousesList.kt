@@ -62,8 +62,8 @@ fun HousesList(
                 date = house?.founded.toString(),
                 colors = color,
                 onClick = {
-                    onHouseClicked(extractInt(house?.url.toString()))
-                          },
+                    extractInt(house?.url.toString())?.let { onHouseClicked(it) }
+                },
                 modifier = Modifier
             )
         }
