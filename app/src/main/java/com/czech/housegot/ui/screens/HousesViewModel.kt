@@ -17,11 +17,6 @@ class HousesViewModel @Inject constructor(
     private val housesRepository: HousesRepository,
 ): ViewModel() {
 
-    init {
-        savedStateHandle.get<Int>("house_id").let { houseId ->
-        }
-    }
-
     fun getPagedHouses(): Flow<PagingData<Houses>> =
         housesRepository.getPagedHouses().cachedIn(viewModelScope)
 

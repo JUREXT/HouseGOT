@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.czech.housegot.ui.screens.DetailsScreen
+import com.czech.housegot.ui.screens.DetailsViewModel
 import com.czech.housegot.ui.screens.HousesScreen
 import com.czech.housegot.ui.screens.HousesViewModel
 
@@ -44,6 +45,7 @@ fun AppNavHost(
             route = Screens.DetailsScreen.route + "/{house_id}",
             arguments = listOf(navArgument("house_id") {
                 type = NavType.IntType
+                nullable = false
             })
         ) { backStackEntry ->
 
@@ -51,7 +53,7 @@ fun AppNavHost(
                 navController.getBackStackEntry(Screens.DetailsScreen.route + "/{house_id}")
             }
 
-            val viewModel = hiltViewModel<HousesViewModel>(housesEntry)
+            val viewModel = hiltViewModel<DetailsViewModel>(housesEntry)
 
             DetailsScreen(
                 onBackPressed = { onBackPressed() },
