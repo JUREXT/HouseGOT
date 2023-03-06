@@ -1,8 +1,10 @@
 package com.czech.housegot.ui.components
 
+import androidx.annotation.ColorInt
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,7 +21,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.czech.housegot.R
-import com.czech.housegot.ui.theme.black
+import com.czech.housegot.ui.theme.*
 
 @Composable
 fun HouseDetails(
@@ -30,14 +32,31 @@ fun HouseDetails(
     lord: String,
     heir: String,
     quote: String,
+    colorInt: Int,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxSize()
     ) {
+        val color = when (colorInt) {
+            0 -> sage
+            1 -> apricot
+            2 -> rock_blue
+            3 -> scarpa
+            4 -> purple
+            5 -> melrose
+            6 -> yellow
+            7 -> orange
+            8 -> emerald
+            9 -> minsk
+            else -> blue
+        }
         Card(
             shape = RectangleShape,
+            colors = CardDefaults.cardColors(
+                containerColor = color
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)
@@ -98,139 +117,150 @@ fun HouseDetails(
                     modifier = Modifier
                         .layoutId("house")
                 )
-                Row(
-                    modifier = Modifier
-                        .layoutId("founded")
-                ) {
-                    Text(
-                        text = "Founded by ",
-                        color = black,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily.SansSerif,
-                        textAlign = TextAlign.Center,
-                    )
-                    Text(
-                        text = founder,
-                        color = black,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily.SansSerif,
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
-                        text = " in ",
-                        color = black,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily.SansSerif,
-                        textAlign = TextAlign.Center,
-                    )
-                    Text(
-                        text = founded,
-                        color = black,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily.SansSerif,
-                        textAlign = TextAlign.Center,
-                    )
+                if (founder.isNotEmpty() && founded.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier
+                            .layoutId("founded")
+                    ) {
+                        Text(
+                            text = "Founded by ",
+                            color = black,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.W400,
+                            fontFamily = FontFamily.SansSerif,
+                            textAlign = TextAlign.Center,
+                        )
+                        Text(
+                            text = founder,
+                            color = black,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.W400,
+                            fontFamily = FontFamily.SansSerif,
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = " in ",
+                            color = black,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.W400,
+                            fontFamily = FontFamily.SansSerif,
+                            textAlign = TextAlign.Center,
+                        )
+                        Text(
+                            text = founded,
+                            color = black,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.W400,
+                            fontFamily = FontFamily.SansSerif,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
                 }
-                Row(
-                    modifier = Modifier
-                        .layoutId("region"),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.region),
-                        contentDescription = "region icon",
-                    )
-                    Spacer(
+                if (region.isNotEmpty()) {
+                    Row(
                         modifier = Modifier
-                            .width(2.dp)
-                    )
-                    Text(
-                        text = region,
-                        color = black,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily.SansSerif,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                    )
+                            .layoutId("region"),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.region),
+                            contentDescription = "region icon",
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .width(4.dp)
+                        )
+                        Text(
+                            text = region,
+                            color = black,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.W400,
+                            fontFamily = FontFamily.SansSerif,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                        )
+                    }
                 }
-                Row(
-                    modifier = Modifier
-                        .layoutId("lord"),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.lord),
-                        contentDescription = "lord icon",
-                    )
-                    Spacer(
+                if (lord.isNotEmpty()) {
+                    Row(
                         modifier = Modifier
-                            .width(2.dp)
-                    )
-                    Text(
-                        text = lord,
-                        color = black,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily.SansSerif,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                    )
+                            .layoutId("lord"),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.lord),
+                            contentDescription = "lord icon",
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .width(4.dp)
+                        )
+                        Text(
+                            text = lord,
+                            color = black,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.W400,
+                            fontFamily = FontFamily.SansSerif,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                        )
+                    }
                 }
-                Row(
-                    modifier = Modifier
-                        .layoutId("incoming"),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.incoming),
-                        contentDescription = "incoming icon",
-                    )
-                    Spacer(
+                if (heir.isNotEmpty()) {
+                    Row(
                         modifier = Modifier
-                            .width(2.dp)
-                    )
-                    Text(
-                        text = heir,
-                        color = black,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily.SansSerif,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                    )
+                            .layoutId("incoming"),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.incoming),
+                            contentDescription = "incoming icon",
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .width(4.dp)
+                        )
+                        Text(
+                            text = heir,
+                            color = black,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.W400,
+                            fontFamily = FontFamily.SansSerif,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                        )
+                    }
                 }
-                Row(
-                    modifier = Modifier
-                        .layoutId("mottoRow"),
-                    verticalAlignment = Alignment.Top,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.quote),
-                        contentDescription = "motto icon",
-                    )
-                    Spacer(
+                if (quote.isNotEmpty()) {
+                    Row(
                         modifier = Modifier
-                            .width(2.dp)
-                    )
-                    Text(
-                        text = quote,
-                        color = black,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily.SansSerif,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                    )
+                            .layoutId("mottoRow"),
+                        verticalAlignment = Alignment.Top,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.quote),
+                            contentDescription = "motto icon",
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .width(4.dp)
+                        )
+                        Text(
+                            text = quote,
+                            color = black,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.W400,
+                            fontFamily = FontFamily.SansSerif,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                        )
+                    }
                 }
+
             }
             
         }

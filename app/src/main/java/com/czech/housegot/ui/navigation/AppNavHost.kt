@@ -36,21 +36,27 @@ fun AppNavHost(
             val viewModel = hiltViewModel<HousesViewModel>()
             HousesScreen(
                 viewModel = viewModel,
-                onHouseClicked = { house_id ->
-                    navController.navigate(Screens.DetailsScreen.route + "/$house_id")
+                onHouseClicked = { house_id, color_int ->
+                    navController.navigate(Screens.DetailsScreen.route + "/$house_id" + "/$color_int")
                 }
             )
         }
         composable(
-            route = Screens.DetailsScreen.route + "/{house_id}",
-            arguments = listOf(navArgument("house_id") {
-                type = NavType.IntType
-                nullable = false
-            })
+            route = Screens.DetailsScreen.route + "/{house_id}" + "/{color_int}",
+            arguments = listOf(
+                navArgument("house_id") {
+                    type = NavType.IntType
+                    nullable = false
+                },
+                navArgument("color_int") {
+                    type = NavType.IntType
+                    nullable = false
+                }
+            )
         ) { backStackEntry ->
 
             val housesEntry = remember(backStackEntry) {
-                navController.getBackStackEntry(Screens.DetailsScreen.route + "/{house_id}")
+                navController.getBackStackEntry(Screens.DetailsScreen.route + "/{house_id}" + "/{color_int}")
             }
 
             val viewModel = hiltViewModel<DetailsViewModel>(housesEntry)

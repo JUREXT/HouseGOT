@@ -30,7 +30,7 @@ import com.czech.housegot.utils.extractInt
 fun HousesList(
     list: LazyPagingItems<Houses>,
     observeLoadStates: @Composable () -> Unit,
-    onHouseClicked: (Int) -> Unit,
+    onHouseClicked: (Int, Int) -> Unit,
     modifier: Modifier,
 ) {
 
@@ -44,25 +44,39 @@ fun HousesList(
         itemsIndexed(
             items = list,
         ) { index, house ->
-            var color: Color = blue
-            when {
-                index % 11 == 0 -> color = sage
-                index % 11 == 1 -> color = apricot
-                index % 11 == 2 -> color = rock_blue
-                index % 11 == 3 -> color = scarpa
-                index % 11 == 4 -> color = purple
-                index % 11 == 5 -> color = melrose
-                index % 11 == 6 -> color = yellow
-                index % 11 == 7 -> color = orange
-                index % 11 == 8 -> color = emerald
-                index % 11 == 9 -> color = minsk
+            val color = when {
+                index % 11 == 0 -> sage
+                index % 11 == 1 -> apricot
+                index % 11 == 2 -> rock_blue
+                index % 11 == 3 -> scarpa
+                index % 11 == 4 -> purple
+                index % 11 == 5 -> melrose
+                index % 11 == 6 -> yellow
+                index % 11 == 7 -> orange
+                index % 11 == 8 -> emerald
+                index % 11 == 9 -> minsk
+                else -> blue
+            }
+
+            val colorInt = when (color) {
+                sage -> 0
+                apricot -> 1
+                rock_blue -> 2
+                scarpa -> 3
+                purple -> 4
+                melrose -> 5
+                yellow -> 6
+                orange -> 7
+                emerald -> 8
+                minsk -> 9
+                else -> 10
             }
             HousesListItem(
                 house = house?.name.toString(),
                 date = house?.founded.toString(),
                 colors = color,
                 onClick = {
-                    extractInt(house?.url.toString())?.let { onHouseClicked(it) }
+                    extractInt(house?.url.toString())?.let { onHouseClicked(it, colorInt) }
                 },
                 modifier = Modifier
             )
