@@ -13,7 +13,7 @@ interface ApiService {
     suspend fun getHouses(
         @Query("page") page: Int,
         @Query("pageSize") pageSize: Int
-    ): List<Houses>
+    ): Response<List<Houses>>
 
     @GET("houses/{id}")
     suspend fun getHouseDetail(

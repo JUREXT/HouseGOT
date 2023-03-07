@@ -76,31 +76,31 @@ class HousesRemoteMediator @Inject constructor(
     }
         return withContext(ioDispatcher) {
             try {
-                val houses = page.let { apiService.getHouses(page = it, pageSize = PAGE_SIZE) }
+                val houses = apiService.getHouses(page = page, pageSize = PAGE_SIZE).body()
 
                 delay(500)
 
-                val endOfPaginationReached = houses.isEmpty()
+                if (houses?.isNotEmpty() == true) {
+                    if (loadType == LoadType.REFRESH) {
+                        remoteKeysDao.deleteRemoteKeys()
+                        housesDao.deleteAllHouses()
+                    }
+                    val prevKey = if (page > 1) page - 1 else null
+                    val nextKey = if (page >= 22) null else page + 1
+                    val remoteKeys = houses.map {
+                        RemoteKeys(
+                            id = it.id,
+                            prevKey = prevKey,
+                            currentPage = page,
+                            nextKey = nextKey
+                        )
+                    }
 
-                if (loadType == LoadType.REFRESH) {
-                    remoteKeysDao.deleteRemoteKeys()
-                    housesDao.deleteAllHouses()
+                    remoteKeysDao.insertAll(remoteKeys)
+                    housesDao.insertHouses(houses.onEach {house -> house.page = page })
                 }
-                val prevKey = if (page > 1) page - 1 else null
-                val nextKey = if (page >= 22) null else page + 1
-                val remoteKeys = houses.map {
-                    RemoteKeys(
-                        id = it.id,
-                        prevKey = prevKey,
-                        currentPage = page,
-                        nextKey = nextKey
-                    )
-                }
 
-                remoteKeysDao.insertAll(remoteKeys)
-                housesDao.insertHouses(houses.onEach {house -> house.page = page })
-
-                MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+                MediatorResult.Success(endOfPaginationReached = houses?.isEmpty()!!)
             } catch (error: IOException) {
                 MediatorResult.Error(error)
             } catch (error: HttpException) {
