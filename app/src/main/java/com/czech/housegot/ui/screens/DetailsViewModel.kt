@@ -19,7 +19,7 @@ class DetailsViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
 ): ViewModel() {
 
-    private val houseId = savedStateHandle.get<Int>("house_id")
+    val houseId = savedStateHandle.get<Int>("house_id")
     val colorInt = savedStateHandle.get<Int>("color_int")
 
     val detailsState = MutableStateFlow<DetailsState?>(null)
@@ -27,9 +27,9 @@ class DetailsViewModel @Inject constructor(
     val lord = mutableStateOf<String?>(null)
     val heir = mutableStateOf<String?>(null)
 
-    init {
-        getDetails(houseId = houseId!!)
-    }
+//    init {
+//        getDetails(houseId = houseId!!)
+//    }
 
     fun getCharacters(founderId: Int?, lordId: Int?, heirId: Int?) {
         viewModelScope.launch {
@@ -57,7 +57,7 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    private fun getDetails(houseId: Int) {
+    fun getDetails(houseId: Int) {
         viewModelScope.launch {
             detailsRepository.getHouseDetails(houseId = houseId).collect {
                 when {

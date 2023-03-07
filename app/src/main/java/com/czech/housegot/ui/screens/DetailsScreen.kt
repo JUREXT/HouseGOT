@@ -54,6 +54,7 @@ fun Observe(
     snackbarHostState: SnackbarHostState,
     onBackPressed: () -> Unit
 ) {
+    viewModel.houseId?.let { viewModel.getDetails(it) }
     when (val state = viewModel.detailsState.collectAsState().value) {
         is DetailsState.Loading -> {
             Box(
