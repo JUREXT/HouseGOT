@@ -5,14 +5,12 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.czech.housegot.database.HousesDao
-import com.czech.housegot.database.HousesDatabase
 import com.czech.housegot.database.RemoteKeysDao
 import com.czech.housegot.models.Houses
 import com.czech.housegot.models.RemoteKeys
 import com.czech.housegot.network.ApiService
 import com.czech.housegot.utils.Constants.Companion.PAGE_SIZE
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -26,13 +24,13 @@ class HousesRemoteMediator @Inject constructor(
     private val housesDao: HousesDao,
     private val remoteKeysDao: RemoteKeysDao,
     private val apiService: ApiService,
-    private val ioDispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher
 ): RemoteMediator<Int, Houses>() {
 
     override suspend fun initialize(): InitializeAction {
         val cacheTimeout = TimeUnit.MILLISECONDS.convert(48, TimeUnit.HOURS)
 
-        return withContext(ioDispatcher) {
+        return withContext(dispatcher) {
             if (System.currentTimeMillis() - (remoteKeysDao.getCreationTime() ?: 0) < cacheTimeout) {
                 InitializeAction.SKIP_INITIAL_REFRESH
             } else {
@@ -42,13 +40,13 @@ class HousesRemoteMediator @Inject constructor(
     }
 
     private suspend fun getRemoteKeyForFirstItem(): RemoteKeys? {
-        return withContext(ioDispatcher) {
+        return withContext(dispatcher) {
             remoteKeysDao.getRemoteKeys().firstOrNull()
         }
     }
 
     private suspend fun getRemoteKeyForLastItem(): RemoteKeys? {
-        return withContext(ioDispatcher) {
+        return withContext(dispatcher) {
             remoteKeysDao.getRemoteKeys().lastOrNull()
         }
     }
@@ -74,7 +72,7 @@ class HousesRemoteMediator @Inject constructor(
         }
 
     }
-        return withContext(ioDispatcher) {
+        return withContext(dispatcher) {
             try {
                 val houses = apiService.getHouses(page = page, pageSize = PAGE_SIZE).body()
 

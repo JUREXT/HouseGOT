@@ -1,14 +1,19 @@
 package com.czech.housegot.ui.screens
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.czech.housegot.models.DetailCharacters
 import com.czech.housegot.repositories.CharacterRepository
 import com.czech.housegot.repositories.DetailsRepository
+import com.czech.housegot.utils.CharacterState
 import com.czech.housegot.utils.DetailsState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,23 +21,25 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val detailsRepository: DetailsRepository,
-    private val characterRepository: CharacterRepository
+    private val characterRepository: CharacterRepository,
+    private val dispatcher: CoroutineDispatcher
 ): ViewModel() {
 
-    val houseId = savedStateHandle.get<Int>("house_id")
+    private val houseId = savedStateHandle.get<Int>("house_id")
     val colorInt = savedStateHandle.get<Int>("color_int")
 
-    val detailsState = MutableStateFlow<DetailsState?>(null)
-    val founder = mutableStateOf<String?>(null)
-    val lord = mutableStateOf<String?>(null)
-    val heir = mutableStateOf<String?>(null)
+    private val _detailsState = MutableStateFlow<DetailsState?>(null)
+    val detailsState: StateFlow<DetailsState?> = _detailsState
 
-//    init {
-//        getDetails(houseId = houseId!!)
-//    }
+    private val _characterState = MutableStateFlow<CharacterState>(CharacterState.Loading)
+    val characterState: StateFlow<CharacterState> = _characterState
+
+    init {
+        getDetails(houseId = houseId!!)
+    }
 
     fun getCharacters(founderId: Int?, lordId: Int?, heirId: Int?) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             val founderResponse = characterRepository.getCharDetails(founderId)
             val lordResponse = characterRepository.getCharDetails(lordId)
             val heirResponse = characterRepository.getCharDetails(heirId)
@@ -41,34 +48,31 @@ class DetailsViewModel @Inject constructor(
                 lordResponse,
                 heirResponse
             ) { founder, lord, heir ->
-                listOf(
-                    founder?.name,
-                    lord?.name,
-                    heir?.name
+                DetailCharacters(
+                    founder = founder?.name,
+                    lord = lord?.name,
+                    heir = heir?.name
                 )
             }.catch {
-                detailsState.value = DetailsState.Error(message = it.message.toString())
-            }.collect {
-                founder.value = it[0]
-                lord.value = it[1]
-                heir.value = it[2]
+                _characterState.value = CharacterState.Error(message = it.message.toString())
+            }.collect { char ->
+                _characterState.value = CharacterState.Success(data = char)
             }
-
         }
     }
 
     fun getDetails(houseId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             detailsRepository.getHouseDetails(houseId = houseId).collect {
                 when {
                     it.isLoading -> {
-                        detailsState.value = DetailsState.Loading
+                        _detailsState.value = DetailsState.Loading
                     }
                     it.data == null -> {
-                        detailsState.value = DetailsState.Error(message = it.message.toString())
+                        _detailsState.value = DetailsState.Error(message = it.message.toString())
                     }
                     else -> {
-                        detailsState.value = DetailsState.Success(data = it.data)
+                        _detailsState.value = DetailsState.Success(data = it.data)
                     }
                 }
             }

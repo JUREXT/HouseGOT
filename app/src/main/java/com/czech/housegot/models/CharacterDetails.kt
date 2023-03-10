@@ -19,12 +19,5 @@ data class CharacterDetails(
     val books: List<String?>?,
     val povBooks: List<Any?>?,
     val tvSeries: List<String?>?,
-    val playedBy: List<String?>?,
-    var charCategory: CharacterCategory?
+    val playedBy: List<String?>?
 )
-
-enum class CharacterCategory {
-    FOUNDER,
-    LORD,
-    HEIR
-}

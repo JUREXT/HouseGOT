@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class DetailsRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
-    private val ioDispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher
 ): DetailsRepository {
 
     override fun getHouseDetails(houseId: Int): Flow<DataState<Houses>> {
@@ -42,6 +42,6 @@ class DetailsRepositoryImpl @Inject constructor(
                     )
                 )
             }
-        }.flowOn(ioDispatcher)
+        }.flowOn(dispatcher)
     }
 }

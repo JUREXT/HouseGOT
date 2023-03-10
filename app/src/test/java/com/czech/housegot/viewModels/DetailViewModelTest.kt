@@ -1,4 +1,4 @@
-package com.czech.housegot.data.viewModels
+package com.czech.housegot.viewModels
 
 
 import androidx.lifecycle.SavedStateHandle
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.*
 import org.junit.*
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -28,14 +28,20 @@ class HouseDetailViewModelTest {
     @Mock
     private lateinit var characterRepository: CharacterRepository
 
-    @Mock
-    private lateinit var savedStateHandle: SavedStateHandle
+//    @Mock
+//    private lateinit var savedStateHandle: SavedStateHandle
+
+    private lateinit var detailsViewModel: DetailsViewModel
 
     private val testCoroutineDispatcher = UnconfinedTestDispatcher()
 
     @Before
     fun initMocks() {
         MockitoAnnotations.initMocks(this)
+
+        val savedStateHandle = SavedStateHandle()
+        savedStateHandle["house_id"] = 1
+        detailsViewModel = DetailsViewModel(savedStateHandle, detailsRepository, characterRepository, testCoroutineDispatcher)
         Dispatchers.setMain(testCoroutineDispatcher)
     }
 
@@ -44,7 +50,6 @@ class HouseDetailViewModelTest {
         Dispatchers.resetMain()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testGetDetails() = runTest(UnconfinedTestDispatcher()) {
         val detail = Houses(
@@ -68,8 +73,6 @@ class HouseDetailViewModelTest {
             page = 1
         )
 
-        val detailsViewModel = DetailsViewModel(savedStateHandle, detailsRepository, characterRepository)
-
         val response = DataState.data(data = detail)
 
         val houseId = 1
@@ -78,13 +81,13 @@ class HouseDetailViewModelTest {
 
         val flow = channel.consumeAsFlow()
 
-        Mockito.`when`(detailsRepository.getHouseDetails(houseId)).thenReturn(flow)
+        `when`(detailsRepository.getHouseDetails(houseId)).thenReturn(flow)
 
         val job = launch {
             channel.send(response)
         }
 
-        detailsViewModel.getDetails(1)
+        detailsViewModel.getDetails(houseId)
 
         Assert.assertEquals(true, detailsViewModel.detailsState.value == DetailsState.Success(detail))
         Assert.assertEquals(false, detailsViewModel.detailsState.value == DetailsState.Loading)

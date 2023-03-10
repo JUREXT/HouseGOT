@@ -5,15 +5,14 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.czech.housegot.R
 import androidx.compose.ui.res.painterResource
+import com.czech.housegot.models.DetailCharacters
 import com.czech.housegot.ui.components.HouseDetails
+import com.czech.housegot.utils.CharacterState
 import com.czech.housegot.utils.DetailsState
 import com.czech.housegot.utils.extractInt
 
@@ -54,7 +53,6 @@ fun Observe(
     snackbarHostState: SnackbarHostState,
     onBackPressed: () -> Unit
 ) {
-    viewModel.houseId?.let { viewModel.getDetails(it) }
     when (val state = viewModel.detailsState.collectAsState().value) {
         is DetailsState.Loading -> {
             Box(
@@ -70,19 +68,41 @@ fun Observe(
         }
         is DetailsState.Success -> {
             val house = state.data
-            viewModel.getCharacters(
-                founderId = extractInt(house?.founder.toString()),
-                lordId = extractInt(house?.currentLord.toString()),
-                heirId = extractInt(house?.heir.toString())
-            )
+
+            LaunchedEffect(key1 = Unit) {
+                viewModel.getCharacters(
+                    founderId = extractInt(house?.founder.toString()),
+                    lordId = extractInt(house?.currentLord.toString()),
+                    heirId = extractInt(house?.heir.toString())
+                )
+            }
+
+            var characters by remember {
+                mutableStateOf<DetailCharacters?>(null)
+            }
+            when (val charState = viewModel.characterState.collectAsState().value) {
+                is CharacterState.Success -> {
+                    characters = charState.data
+                }
+                is CharacterState.Error -> {
+                    LaunchedEffect(snackbarHostState) {
+                        snackbarHostState.showSnackbar(
+                            message = charState.message,
+                            actionLabel = "ERROR",
+                            duration = SnackbarDuration.Short,
+                        )
+                    }
+                }
+                else -> {}
+            }
 
             HouseDetails(
                 house = house?.name.toString(),
-                founder = viewModel.founder.value ?: "",
+                founder = characters?.founder ?: "",
                 founded = house?.founded.toString(),
                 region = house?.region.toString(),
-                lord = viewModel.lord.value ?: "",
-                heir = viewModel.heir.value ?: "",
+                lord = characters?.lord ?: "",
+                heir = characters?.heir ?: "",
                 quote = house?.coatOfArms.toString(),
                 colorInt = viewModel.colorInt!!
             )

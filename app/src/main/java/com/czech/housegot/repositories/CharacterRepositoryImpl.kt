@@ -4,13 +4,14 @@ import com.czech.housegot.models.CharacterDetails
 import com.czech.housegot.network.ApiService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class CharacterRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
-    private val ioDispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher
 ): CharacterRepository {
 
     override fun getCharDetails(charId: Int?): Flow<CharacterDetails?> {
@@ -23,6 +24,6 @@ class CharacterRepositoryImpl @Inject constructor(
                 emit(null)
             }
 
-        }.flowOn(ioDispatcher)
+        }.flowOn(dispatcher)
     }
 }

@@ -32,20 +32,20 @@ class RepositoryModule {
     @[Provides Singleton]
     fun provideDetailsRepository(
         apiService: ApiService,
-        ioDispatcher: CoroutineDispatcher
+        dispatcher: CoroutineDispatcher
     ): DetailsRepository =
         DetailsRepositoryImpl(
             apiService = apiService,
-            ioDispatcher = ioDispatcher
+            dispatcher = dispatcher
         )
 
     @[Provides Singleton]
     fun provideCharacterRepository(
         apiService: ApiService,
-        ioDispatcher: CoroutineDispatcher
+        dispatcher: CoroutineDispatcher
     ): CharacterRepository =
         CharacterRepositoryImpl(
             apiService = apiService,
-            ioDispatcher = ioDispatcher
+            dispatcher = dispatcher
         )
 }

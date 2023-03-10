@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -38,12 +39,16 @@ fun HousesList(
 //    val data = listOf("House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor")
 
     LazyColumn(
+        state = rememberLazyListState(),
         modifier = modifier
             .fillMaxSize()
             .padding(start = 4.dp, end = 4.dp, top = 4.dp)
     ) {
         itemsIndexed(
             items = list,
+            key = { _, item ->
+                item.id
+            }
         ) { index, house ->
             val color = when {
                 index % 11 == 0 -> sage
