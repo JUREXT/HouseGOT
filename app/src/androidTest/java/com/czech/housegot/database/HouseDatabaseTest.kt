@@ -1,13 +1,10 @@
-package com.czech.housegot
+package com.czech.housegot.database
 
 import android.content.Context
 import androidx.paging.*
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.czech.housegot.database.HousesDao
-import com.czech.housegot.database.HousesDatabase
-import com.czech.housegot.database.RemoteKeysDao
 import com.czech.housegot.models.Houses
 import com.czech.housegot.models.RemoteKeys
 import kotlinx.coroutines.runBlocking

@@ -1,8 +1,6 @@
 package com.czech.housegot.models
 
 
-import com.google.gson.annotations.SerializedName
-
 data class CharacterDetails(
     val url: String?,
     val name: String?,

@@ -1,4 +1,4 @@
-package com.czech.housegot.utils
+package com.czech.housegot.utils.states
 
 
 data class DataState<T>(

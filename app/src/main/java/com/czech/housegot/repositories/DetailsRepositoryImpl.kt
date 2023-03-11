@@ -2,7 +2,7 @@ package com.czech.housegot.repositories
 
 import com.czech.housegot.models.Houses
 import com.czech.housegot.network.ApiService
-import com.czech.housegot.utils.DataState
+import com.czech.housegot.utils.states.DataState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

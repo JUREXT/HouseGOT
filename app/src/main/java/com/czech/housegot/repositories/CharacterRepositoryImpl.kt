@@ -4,7 +4,6 @@ import com.czech.housegot.models.CharacterDetails
 import com.czech.housegot.network.ApiService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject

@@ -1,7 +1,6 @@
 package com.czech.housegot.di
 
 import com.czech.housegot.database.HousesDao
-import com.czech.housegot.database.HousesDatabase
 import com.czech.housegot.database.RemoteKeysDao
 import com.czech.housegot.network.ApiService
 import com.czech.housegot.repositories.*

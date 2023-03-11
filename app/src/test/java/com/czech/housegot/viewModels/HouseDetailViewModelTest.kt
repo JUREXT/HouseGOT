@@ -1,13 +1,12 @@
 package com.czech.housegot.viewModels
 
-
 import androidx.lifecycle.SavedStateHandle
 import com.czech.housegot.models.Houses
 import com.czech.housegot.repositories.CharacterRepository
 import com.czech.housegot.repositories.DetailsRepository
-import com.czech.housegot.ui.screens.DetailsViewModel
-import com.czech.housegot.utils.DataState
-import com.czech.housegot.utils.DetailsState
+import com.czech.housegot.ui.screens.detail.DetailsViewModel
+import com.czech.housegot.utils.states.DataState
+import com.czech.housegot.utils.states.DetailsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -27,9 +26,6 @@ class HouseDetailViewModelTest {
 
     @Mock
     private lateinit var characterRepository: CharacterRepository
-
-//    @Mock
-//    private lateinit var savedStateHandle: SavedStateHandle
 
     private lateinit var detailsViewModel: DetailsViewModel
 

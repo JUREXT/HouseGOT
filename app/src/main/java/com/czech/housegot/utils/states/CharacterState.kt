@@ -1,4 +1,4 @@
-package com.czech.housegot.utils
+package com.czech.housegot.utils.states
 
 import com.czech.housegot.models.DetailCharacters
 

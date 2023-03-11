@@ -21,5 +21,5 @@ object AppModule {
 
     @[Singleton Provides]
     fun provideDispatcher(): CoroutineDispatcher =
-        Dispatchers.IO
+        Dispatchers.Default
 }

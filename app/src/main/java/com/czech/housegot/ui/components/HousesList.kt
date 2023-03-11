@@ -5,9 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,12 +35,11 @@ fun HousesList(
     observeLoadStates: @Composable () -> Unit,
     onHouseClicked: (Int, Int) -> Unit,
     modifier: Modifier,
+    listState: LazyListState
 ) {
 
-//    val data = listOf("House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor", "House of valor")
-
     LazyColumn(
-        state = rememberLazyListState(),
+        state = listState,
         modifier = modifier
             .fillMaxSize()
             .padding(start = 4.dp, end = 4.dp, top = 4.dp)

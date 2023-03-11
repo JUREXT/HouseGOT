@@ -1,4 +1,4 @@
-package com.czech.housegot.ui.screens
+package com.czech.housegot.ui.screens.detail
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,8 +12,8 @@ import com.czech.housegot.R
 import androidx.compose.ui.res.painterResource
 import com.czech.housegot.models.DetailCharacters
 import com.czech.housegot.ui.components.HouseDetails
-import com.czech.housegot.utils.CharacterState
-import com.czech.housegot.utils.DetailsState
+import com.czech.housegot.utils.states.CharacterState
+import com.czech.housegot.utils.states.DetailsState
 import com.czech.housegot.utils.extractInt
 
 @OptIn(ExperimentalMaterial3Api::class)

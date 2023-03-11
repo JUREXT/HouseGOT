@@ -1,4 +1,4 @@
-package com.czech.housegot.ui.screens
+package com.czech.housegot.ui.screens.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.czech.housegot.models.DetailCharacters
 import com.czech.housegot.repositories.CharacterRepository
 import com.czech.housegot.repositories.DetailsRepository
-import com.czech.housegot.utils.CharacterState
-import com.czech.housegot.utils.DetailsState
+import com.czech.housegot.utils.states.CharacterState
+import com.czech.housegot.utils.states.DetailsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,9 +1,8 @@
-package com.czech.housegot.ui.screens
+package com.czech.housegot.ui.screens.houses
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,20 +47,25 @@ fun HousesScreen(
         }
     ) {
 
-        val houses = viewModel.getPagedHouses().collectAsLazyPagingItems()
+        val houses = remember {
+            viewModel.getPagedHouses()
+        }
+
+        val pagedHouses = houses.collectAsLazyPagingItems()
 
         HousesList(
-            list = houses,
+            list = pagedHouses,
             observeLoadStates = {
                 ObserveLoadStates(
-                    loadState = houses.loadState.mediator,
-                    houses = houses,
+                    loadState = pagedHouses.loadState.mediator,
+                    houses = pagedHouses,
                     snackbarHostState = snackbarHostState
                 )
             },
             onHouseClicked = { id, color ->
                 onHouseClicked(id, color)
             },
+            listState = rememberLazyListState(),
             modifier = Modifier
         )
     }

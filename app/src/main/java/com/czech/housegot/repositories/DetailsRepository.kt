@@ -1,7 +1,7 @@
 package com.czech.housegot.repositories
 
 import com.czech.housegot.models.Houses
-import com.czech.housegot.utils.DataState
+import com.czech.housegot.utils.states.DataState
 import kotlinx.coroutines.flow.Flow
 
 interface DetailsRepository {
