@@ -2,6 +2,28 @@
 An app that shows all the houses of GOT (from an API) in a List and shows the details of each house in a detail view.
 
 
+## Tech stack and Libraries used
+* Minimum SDK level: 23
+* Kotlin, 100% Jetpack Compose, [Coroutines](https://developer.android.com/kotlin/coroutines) and Flow for asynchronous programming
+* Jetpack libraries
+    * [Jetpack Compose](https://developer.android.com/jetpack/compose): Android’s modern toolkit for building native UI
+    * [Navigation Compose](https://developer.android.com/jetpack/compose/navigation): Navigate between composables while leveraging of the Navigation component’s infrastructure and features
+    * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel): Encapsulates related business logic and manage UI data in a lifecycle-aware fashion
+    * [Room](https://developer.android.com/training/data-storage/room): Persistence library provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite
+    * [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview): Library helps load and display pages of data from a larger dataset from local storage or over network.
+    * [Hilt](https://developer.android.com/training/dependency-injection/hilt-android): Standard way to incorporate Dagger dependency injection into an Android application that reduces boilerplate code
+    * [Retrofit2](https://github.com/square/retrofit): Type-safe REST client for Android and Java
+    * [Gson](https://github.com/google/gson): Java library that can be used to convert Java Objects into their JSON representation and vice versa
+* Architecture
+    * MVVM Architecture
+    * Repository pattern
+* JUnit and Mockito for testing
+
+
+## Architecture
+This app follows [Google's official architecture guidance](https://developer.android.com/topic/architecture). It is based on the MVVM architecture and the Repository pattern.
+
+
 ## LICENSE
 ```
 Apache License
