@@ -8,13 +8,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.czech.housegot.R
 import androidx.compose.ui.res.painterResource
-import com.czech.housegot.models.DetailCharacters
+import com.czech.housegot.R
 import com.czech.housegot.ui.components.HouseDetails
-import com.czech.housegot.utils.states.CharacterState
-import com.czech.housegot.utils.states.DetailsState
 import com.czech.housegot.utils.extractInt
+import com.czech.housegot.utils.states.DetailsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -77,32 +75,15 @@ fun Observe(
                 )
             }
 
-            var characters by remember {
-                mutableStateOf<DetailCharacters?>(null)
-            }
-            when (val charState = viewModel.characterState.collectAsState().value) {
-                is CharacterState.Success -> {
-                    characters = charState.data
-                }
-                is CharacterState.Error -> {
-                    LaunchedEffect(snackbarHostState) {
-                        snackbarHostState.showSnackbar(
-                            message = charState.message,
-                            actionLabel = "ERROR",
-                            duration = SnackbarDuration.Short,
-                        )
-                    }
-                }
-                else -> {}
-            }
+            val characters = viewModel.characterState.collectAsState().value
 
             HouseDetails(
                 house = house?.name.toString(),
-                founder = characters?.founder ?: "",
+                founder = characters.founder.toString(),
                 founded = house?.founded.toString(),
                 region = house?.region.toString(),
-                lord = characters?.lord ?: "",
-                heir = characters?.heir ?: "",
+                lord = characters.lord.toString(),
+                heir = characters.heir.toString(),
                 quote = house?.coatOfArms.toString(),
                 colorInt = viewModel.colorInt!!
             )

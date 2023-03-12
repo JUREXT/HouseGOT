@@ -6,6 +6,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class CharacterRepositoryImpl @Inject constructor(
@@ -16,8 +18,16 @@ class CharacterRepositoryImpl @Inject constructor(
     override fun getCharDetails(charId: Int?): Flow<CharacterDetails?> {
         return flow {
             if (charId != null) {
-                apiService.getCharacterDetail(charId = charId).body()?.let {
-                    emit(it)
+                try {
+                    val response = apiService.getCharacterDetail(charId = charId)
+                    val character = response.body()
+                    if (response.isSuccessful) {
+                        emit(character)
+                    }
+                } catch (e: IOException) {
+                    emit(null)
+                } catch (e: HttpException) {
+                    emit(null)
                 }
             } else {
                 emit(null)

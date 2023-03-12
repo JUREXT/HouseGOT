@@ -20,10 +20,10 @@ class DetailsRepositoryImpl @Inject constructor(
         return flow {
             emit(DataState.loading())
 
-            val response = apiService.getHouseDetail(houseId = houseId)
-            val houses = response.body()
-
             try {
+                val response = apiService.getHouseDetail(houseId = houseId)
+                val houses = response.body()
+
                 if (response.isSuccessful) {
                     emit(DataState.data(data = houses))
                 } else {

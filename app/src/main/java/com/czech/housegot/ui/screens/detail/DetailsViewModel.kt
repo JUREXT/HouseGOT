@@ -6,13 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.czech.housegot.models.DetailCharacters
 import com.czech.housegot.repositories.character.CharacterRepository
 import com.czech.housegot.repositories.detail.DetailsRepository
-import com.czech.housegot.utils.states.CharacterState
 import com.czech.housegot.utils.states.DetailsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,8 +29,8 @@ class DetailsViewModel @Inject constructor(
     private val _detailsState = MutableStateFlow<DetailsState?>(null)
     val detailsState: StateFlow<DetailsState?> = _detailsState
 
-    private val _characterState = MutableStateFlow<CharacterState>(CharacterState.Loading)
-    val characterState: StateFlow<CharacterState> = _characterState
+    private val _characterState = MutableStateFlow(DetailCharacters())
+    val characterState: StateFlow<DetailCharacters> = _characterState
 
     init {
         getDetails(houseId = houseId!!)
@@ -49,14 +47,12 @@ class DetailsViewModel @Inject constructor(
                 heirResponse
             ) { founder, lord, heir ->
                 DetailCharacters(
-                    founder = founder?.name,
-                    lord = lord?.name,
-                    heir = heir?.name
+                    founder = founder?.name ?: "",
+                    lord = lord?.name ?: "",
+                    heir = heir?.name ?: ""
                 )
-            }.catch {
-                _characterState.value = CharacterState.Error(message = it.message.toString())
-            }.collect { char ->
-                _characterState.value = CharacterState.Success(data = char)
+            }.collect { character ->
+                _characterState.value = character
             }
         }
     }
