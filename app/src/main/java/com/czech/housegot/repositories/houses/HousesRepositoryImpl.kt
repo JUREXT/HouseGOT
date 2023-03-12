@@ -1,4 +1,4 @@
-package com.czech.housegot.repositories
+package com.czech.housegot.repositories.houses
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager

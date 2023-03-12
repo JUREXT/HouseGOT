@@ -1,4 +1,4 @@
-package com.czech.housegot.repositories
+package com.czech.housegot.repositories.detail
 
 import com.czech.housegot.models.Houses
 import com.czech.housegot.utils.states.DataState

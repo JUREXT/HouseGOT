@@ -1,4 +1,4 @@
-package com.czech.housegot.repositories
+package com.czech.housegot.repositories.character
 
 import com.czech.housegot.models.CharacterDetails
 import kotlinx.coroutines.flow.Flow

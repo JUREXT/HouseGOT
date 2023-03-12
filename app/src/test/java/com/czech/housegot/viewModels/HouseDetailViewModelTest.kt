@@ -2,8 +2,8 @@ package com.czech.housegot.viewModels
 
 import androidx.lifecycle.SavedStateHandle
 import com.czech.housegot.models.Houses
-import com.czech.housegot.repositories.CharacterRepository
-import com.czech.housegot.repositories.DetailsRepository
+import com.czech.housegot.repositories.character.CharacterRepository
+import com.czech.housegot.repositories.detail.DetailsRepository
 import com.czech.housegot.ui.screens.detail.DetailsViewModel
 import com.czech.housegot.utils.states.DataState
 import com.czech.housegot.utils.states.DetailsState

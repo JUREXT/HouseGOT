@@ -1,4 +1,4 @@
-package com.czech.housegot.repositories
+package com.czech.housegot.repositories.houses
 
 import androidx.paging.PagingData
 import com.czech.housegot.models.Houses

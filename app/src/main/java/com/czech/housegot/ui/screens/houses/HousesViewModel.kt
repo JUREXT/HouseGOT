@@ -3,7 +3,7 @@ package com.czech.housegot.ui.screens.houses
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import com.czech.housegot.models.Houses
-import com.czech.housegot.repositories.HousesRepository
+import com.czech.housegot.repositories.houses.HousesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

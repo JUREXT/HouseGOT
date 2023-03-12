@@ -4,6 +4,12 @@ import com.czech.housegot.database.HousesDao
 import com.czech.housegot.database.RemoteKeysDao
 import com.czech.housegot.network.ApiService
 import com.czech.housegot.repositories.*
+import com.czech.housegot.repositories.character.CharacterRepository
+import com.czech.housegot.repositories.character.CharacterRepositoryImpl
+import com.czech.housegot.repositories.detail.DetailsRepository
+import com.czech.housegot.repositories.detail.DetailsRepositoryImpl
+import com.czech.housegot.repositories.houses.HousesRepository
+import com.czech.housegot.repositories.houses.HousesRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

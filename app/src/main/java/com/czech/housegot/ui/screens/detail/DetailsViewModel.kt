@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.czech.housegot.models.DetailCharacters
-import com.czech.housegot.repositories.CharacterRepository
-import com.czech.housegot.repositories.DetailsRepository
+import com.czech.housegot.repositories.character.CharacterRepository
+import com.czech.housegot.repositories.detail.DetailsRepository
 import com.czech.housegot.utils.states.CharacterState
 import com.czech.housegot.utils.states.DetailsState
 import dagger.hilt.android.lifecycle.HiltViewModel
