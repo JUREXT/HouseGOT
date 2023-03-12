@@ -12,14 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.czech.housegot.models.Houses
 import com.czech.housegot.ui.components.HousesList
+import com.czech.housegot.ui.theme.*
+import kotlinx.coroutines.flow.flowOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -140,5 +144,101 @@ fun ObserveLoadStates(
                 }
             }
         }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Preview
+@Composable
+fun HousesScreenPreview() {
+    Scaffold(
+        topBar = {
+            Text(
+                text = "G.O.T Houses",
+                color = MaterialTheme.colorScheme.secondary,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W700,
+                fontFamily = FontFamily.SansSerif,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(top = 14.dp, start = 16.dp)
+            )
+        }
+    ) {
+        val houses = listOf(
+            Houses(
+                id = 1,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 2,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 3,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 4,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 5,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 6,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 7,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 8,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 9,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            ),
+            Houses(
+                id = 10,
+                name = "House Arryn of the Eyrie",
+                founder = "68 BC",
+                page = 1
+            )
+
+        )
+
+        val paged = flowOf(PagingData.from(houses)).collectAsLazyPagingItems()
+
+        HousesList(
+            list = paged,
+            observeLoadStates = {},
+            onHouseClicked = { _, _ -> },
+            listState = rememberLazyListState(),
+            modifier = Modifier
+        )
     }
 }

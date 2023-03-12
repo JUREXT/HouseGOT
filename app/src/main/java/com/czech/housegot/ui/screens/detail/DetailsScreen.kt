@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.czech.housegot.R
 import com.czech.housegot.ui.components.HouseDetails
 import com.czech.housegot.utils.extractInt
@@ -105,5 +106,36 @@ fun Observe(
             }
         }
         else -> {}
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Preview
+@Composable
+fun DetailsScreenPreview() {
+    Scaffold(
+        topBar = {
+            IconButton(
+                onClick = { }
+            ) {
+                Icon(
+                    painter = painterResource(id = if (isSystemInDarkTheme()) R.drawable.arrow_back_white else R.drawable.arrow_back_black),
+                    contentDescription = "back_button"
+                )
+            }
+        }
+    ) {
+        HouseDetails(
+            house = "House Arryn of the Eyrie",
+            founder = "Artys | Arryn",
+            founded = "Coming of the Andals",
+            region = "The Vale",
+            lord = "Robert Arryn",
+            heir = "Harrold Hardyng",
+            quote = "A sky-blue falcon soaring against a white moon, on a sky-blue field(Bleu celeste, upon a plate a falcon volant of the field)",
+            colorInt = 6
+        )
     }
 }
