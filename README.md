@@ -4,7 +4,7 @@ An app that shows all the houses of GOT (from an API) in a List and shows the de
 
 ## Screenshots
 
-<img src="https://github.com/Czeach/HouseGOT/blob/master/screenshots/photo_2023-03-13%2011.07.36.png" width="125" height="250" /> <img src="https://github.com/Czeach/HouseGOT/blob/master/screenshots/photo_2023-03-13%2011.07.40.png" width="125" height="250" />
+<img src="https://github.com/Czeach/HouseGOT/blob/master/screenshots/photo_2023-03-13%2011.07.36.png" width="250" height="500" /> <img src="https://github.com/Czeach/HouseGOT/blob/master/screenshots/photo_2023-03-13%2011.07.40.png" width="250" height="500" />
 
 ## Tech stack and Libraries used
 * Minimum SDK level: 23
