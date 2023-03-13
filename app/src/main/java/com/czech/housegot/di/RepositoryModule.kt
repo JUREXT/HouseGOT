@@ -31,7 +31,7 @@ class RepositoryModule {
             apiService = apiService,
             housesDao = housesDao,
             remoteKeysDao = remoteKeysDao,
-            ioDispatcher = ioDispatcher
+            dispatcher = ioDispatcher
         )
 
     @[Provides Singleton]

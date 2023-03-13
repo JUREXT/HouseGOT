@@ -2,6 +2,10 @@
 An app that shows all the houses of GOT (from an API) in a List and shows the details of each house in a detail view.
 
 
+## Screenshots
+
+<img src="https://github.com/Czeach/HouseGOT/blob/master/screenshots/photo_2023-03-13%2011.07.36.png" width="125" height="250" /> <img src="https://github.com/Czeach/HouseGOT/blob/master/screenshots/photo_2023-03-13%2011.07.40.png" width="125" height="250" />
+
 ## Tech stack and Libraries used
 * Minimum SDK level: 23
 * Kotlin, 100% Jetpack Compose, [Coroutines](https://developer.android.com/kotlin/coroutines) and Flow for asynchronous programming
@@ -41,4 +45,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
 ```

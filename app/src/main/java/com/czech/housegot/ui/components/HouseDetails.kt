@@ -6,6 +6,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -38,18 +39,20 @@ fun HouseDetails(
         modifier = modifier
             .fillMaxSize()
     ) {
-        val color = when (colorInt) {
-            0 -> sage
-            1 -> apricot
-            2 -> rock_blue
-            3 -> scarpa
-            4 -> purple
-            5 -> melrose
-            6 -> yellow
-            7 -> orange
-            8 -> emerald
-            9 -> minsk
-            else -> blue
+        val color = remember {
+            when (colorInt) {
+                0 -> sage
+                1 -> apricot
+                2 -> rock_blue
+                3 -> scarpa
+                4 -> purple
+                5 -> melrose
+                6 -> yellow
+                7 -> orange
+                8 -> emerald
+                9 -> minsk
+                else -> blue
+            }
         }
         Card(
             shape = RectangleShape,
@@ -61,7 +64,7 @@ fun HouseDetails(
                 .height(300.dp)
         ) {
             val constrains = ConstraintSet {
-                val foundedColumn = createRefFor("founded")
+                val foundedText = createRefFor("founded")
                 val houseText = createRefFor("house")
                 val quoteText = createRefFor("mottoRow")
                 val heirText = createRefFor("incoming")
@@ -75,7 +78,7 @@ fun HouseDetails(
                     width = Dimension.matchParent
                     height = Dimension.wrapContent
                 }
-                constrain(foundedColumn) {
+                constrain(foundedText) {
                     top.linkTo(houseText.bottom)
                     start.linkTo(houseText.start)
                     end.linkTo(houseText.end)
@@ -117,36 +120,12 @@ fun HouseDetails(
                         .layoutId("house")
                 )
                 if (founder.isNotEmpty() && founded.isNotEmpty()) {
-                    Row(
+                    Box(
                         modifier = Modifier
                             .layoutId("founded")
                     ) {
                         Text(
-                            text = "Founded by ",
-                            color = black,
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.W400,
-                            fontFamily = FontFamily.SansSerif,
-                            textAlign = TextAlign.Center,
-                        )
-                        Text(
-                            text = founder,
-                            color = black,
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.W400,
-                            fontFamily = FontFamily.SansSerif,
-                            textAlign = TextAlign.Center
-                        )
-                        Text(
-                            text = " in ",
-                            color = black,
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.W400,
-                            fontFamily = FontFamily.SansSerif,
-                            textAlign = TextAlign.Center,
-                        )
-                        Text(
-                            text = founded,
+                            text = "Founded by $founder in $founded",
                             color = black,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.W400,

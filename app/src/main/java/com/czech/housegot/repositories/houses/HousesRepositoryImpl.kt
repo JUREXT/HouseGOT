@@ -18,7 +18,7 @@ class HousesRepositoryImpl @Inject constructor(
     private val housesDao: HousesDao,
     private val remoteKeysDao: RemoteKeysDao,
     private val apiService: ApiService,
-    private val ioDispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher
 ): HousesRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -37,7 +37,7 @@ class HousesRepositoryImpl @Inject constructor(
                 housesDao = housesDao,
                 remoteKeysDao = remoteKeysDao,
                 apiService = apiService,
-                dispatcher = ioDispatcher
+                dispatcher = dispatcher
             )
         ).flow
     }

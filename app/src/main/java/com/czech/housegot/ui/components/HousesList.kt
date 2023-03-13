@@ -10,6 +10,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,32 +51,36 @@ fun HousesList(
                 item.id
             }
         ) { index, house ->
-            val color = when {
-                index % 11 == 0 -> sage
-                index % 11 == 1 -> apricot
-                index % 11 == 2 -> rock_blue
-                index % 11 == 3 -> scarpa
-                index % 11 == 4 -> purple
-                index % 11 == 5 -> melrose
-                index % 11 == 6 -> yellow
-                index % 11 == 7 -> orange
-                index % 11 == 8 -> emerald
-                index % 11 == 9 -> minsk
-                else -> blue
+            val color = remember {
+                when {
+                    index % 11 == 0 -> sage
+                    index % 11 == 1 -> apricot
+                    index % 11 == 2 -> rock_blue
+                    index % 11 == 3 -> scarpa
+                    index % 11 == 4 -> purple
+                    index % 11 == 5 -> melrose
+                    index % 11 == 6 -> yellow
+                    index % 11 == 7 -> orange
+                    index % 11 == 8 -> emerald
+                    index % 11 == 9 -> minsk
+                    else -> blue
+                }
             }
 
-            val colorInt = when (color) {
-                sage -> 0
-                apricot -> 1
-                rock_blue -> 2
-                scarpa -> 3
-                purple -> 4
-                melrose -> 5
-                yellow -> 6
-                orange -> 7
-                emerald -> 8
-                minsk -> 9
-                else -> 10
+            val colorInt = remember {
+                when (color) {
+                    sage -> 0
+                    apricot -> 1
+                    rock_blue -> 2
+                    scarpa -> 3
+                    purple -> 4
+                    melrose -> 5
+                    yellow -> 6
+                    orange -> 7
+                    emerald -> 8
+                    minsk -> 9
+                    else -> 10
+                }
             }
             HousesListItem(
                 house = house?.name.toString(),

@@ -37,7 +37,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun getCharacters(founderId: Int?, lordId: Int?, heirId: Int?) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch {
             val founderResponse = characterRepository.getCharDetails(founderId)
             val lordResponse = characterRepository.getCharDetails(lordId)
             val heirResponse = characterRepository.getCharDetails(heirId)

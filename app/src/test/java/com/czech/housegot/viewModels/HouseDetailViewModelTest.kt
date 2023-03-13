@@ -31,11 +31,12 @@ class HouseDetailViewModelTest {
 
     private val testCoroutineDispatcher = UnconfinedTestDispatcher()
 
+    private lateinit var savedStateHandle: SavedStateHandle
+
     @Before
     fun initMocks() {
         MockitoAnnotations.initMocks(this)
-
-        val savedStateHandle = SavedStateHandle()
+        savedStateHandle = SavedStateHandle()
         savedStateHandle["house_id"] = 1
         detailsViewModel = DetailsViewModel(savedStateHandle, detailsRepository, characterRepository, testCoroutineDispatcher)
         Dispatchers.setMain(testCoroutineDispatcher)
@@ -43,11 +44,12 @@ class HouseDetailViewModelTest {
 
     @After
     fun tearDown() {
+        savedStateHandle.remove<Int>("house_id")
         Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetDetails() = runTest(UnconfinedTestDispatcher()) {
+    fun testGetDetails() = runTest(testCoroutineDispatcher) {
         val detail = Houses(
             id = 1,
             url = "",
@@ -89,7 +91,7 @@ class HouseDetailViewModelTest {
         Assert.assertEquals(false, detailsViewModel.detailsState.value == DetailsState.Loading)
         Assert.assertEquals(false, detailsViewModel.detailsState.value == DetailsState.Error(""))
         job.cancel()
-        
+
     }
 
 }
