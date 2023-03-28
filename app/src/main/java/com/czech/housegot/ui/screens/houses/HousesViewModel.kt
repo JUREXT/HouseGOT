@@ -1,7 +1,9 @@
 package com.czech.housegot.ui.screens.houses
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.czech.housegot.models.Houses
 import com.czech.housegot.repositories.houses.HousesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,5 +16,5 @@ class HousesViewModel @Inject constructor(
 ): ViewModel() {
 
     fun getPagedHouses(): Flow<PagingData<Houses>> =
-        housesRepository.getPagedHouses()
+        housesRepository.getPagedHouses().cachedIn(viewModelScope)
 }

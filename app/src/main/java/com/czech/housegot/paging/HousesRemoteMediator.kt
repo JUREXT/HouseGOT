@@ -75,8 +75,7 @@ class HousesRemoteMediator @Inject constructor(
         return withContext(dispatcher) {
             try {
                 val houses = apiService.getHouses(page = page, pageSize = PAGE_SIZE).body()
-
-                delay(500)
+                val endOfPagination = houses?.isEmpty()
 
                 if (houses?.isNotEmpty() == true) {
                     if (loadType == LoadType.REFRESH) {
@@ -84,7 +83,7 @@ class HousesRemoteMediator @Inject constructor(
                         housesDao.deleteAllHouses()
                     }
                     val prevKey = if (page > 1) page - 1 else null
-                    val nextKey = if (page >= 22) null else page + 1
+                    val nextKey = if (endOfPagination!!) null else page + 1
                     val remoteKeys = houses.map {
                         RemoteKeys(
                             id = it.id,
@@ -98,7 +97,7 @@ class HousesRemoteMediator @Inject constructor(
                     housesDao.insertHouses(houses.onEach {house -> house.page = page })
                 }
 
-                MediatorResult.Success(endOfPaginationReached = houses?.isEmpty()!!)
+                MediatorResult.Success(endOfPaginationReached = endOfPagination!!)
             } catch (error: IOException) {
                 MediatorResult.Error(error)
             } catch (error: HttpException) {
