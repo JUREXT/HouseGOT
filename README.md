@@ -27,6 +27,7 @@ An app that shows all the houses of GOT (from an API) in a List and shows the de
 ## Architecture
 This app follows [Google's official architecture guidance](https://developer.android.com/topic/architecture). It is based on the MVVM architecture and the Repository pattern.
 
+Article: https://towardsdev.com/pagination-in-android-using-paging-3-and-room-database-for-caching-e226ff8db337
 
 ## LICENSE
 ```
